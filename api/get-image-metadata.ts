@@ -4,7 +4,7 @@ import { getJson } from 'serpapi';
 export default async (req: VercelRequest, res: VercelResponse) => {
   const { query, apiKey } = req.query;
 
-  console.log(req.query);
+  console.log('query', req.query);
   try {
     const response = await getJson({
       engine: 'google_images',
