@@ -30,7 +30,9 @@ export const DebouncedSearchInput = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-    debouncedSearch(value);
+    if (value?.length > 1) {
+      debouncedSearch(value);
+    }
   };
 
   return (
@@ -45,7 +47,7 @@ export const DebouncedSearchInput = ({
       </div>
       <input
         type="text"
-        className="block w-full rounded-md border-0 py-1.5 pl-10 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 sm:text-sm sm:leading-6"
+        className="block h-12 w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 sm:text-sm sm:leading-6"
         placeholder="Search for images"
         value={query}
         onChange={handleChange}

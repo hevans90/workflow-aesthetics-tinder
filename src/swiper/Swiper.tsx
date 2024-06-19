@@ -1,8 +1,10 @@
 import React, { useMemo, useRef, useState } from 'react';
 import TinderCard from 'react-tinder-card';
 
+import { currentImageMetadata } from '@/_state/images';
 import { Button } from '@/ui/Button';
 import { Card } from '@/ui/Card';
+import { useStore } from '@nanostores/react';
 
 type SwipeDirection = 'left' | 'right' | 'up' | 'down';
 
@@ -11,31 +13,10 @@ type SwipeAPI = {
   restoreCard(): Promise<void>;
 };
 
-const db = [
-  {
-    name: 'Richard Hendricks',
-    url: './img/richard.jpg',
-  },
-  {
-    name: 'Erlich Bachman',
-    url: './img/erlich.jpg',
-  },
-  {
-    name: 'Monica Hall',
-    url: './img/monica.jpg',
-  },
-  {
-    name: 'Jared Dunn',
-    url: './img/jared.jpg',
-  },
-  {
-    name: 'Dinesh Chugtai',
-    url: './img/dinesh.jpg',
-  },
-];
-
 export const Swiper = () => {
-  const [currentIndex, setCurrentIndex] = useState(db.length - 1);
+  const imageResults = useStore(currentImageMetadata);
+
+  const [currentIndex, setCurrentIndex] = useState(imageResults.length - 1);
   const [lastDirection, setLastDirection] = useState<SwipeDirection>();
   // used for outOfFrame closure
 
@@ -43,10 +24,10 @@ export const Swiper = () => {
 
   const childRefs = useMemo(
     () =>
-      Array(db.length)
+      Array(imageResults.length)
         .fill(0)
         .map(() => React.createRef<SwipeAPI>()),
-    []
+    [imageResults]
   );
 
   const updateCurrentIndex = (val: number) => {
@@ -55,17 +36,15 @@ export const Swiper = () => {
   };
 
   // set last direction and decrease current index
-  const swiped = (
-    direction: SwipeDirection,
-    nameToDelete: string,
-    index: number
-  ) => {
+  const swiped = (direction: SwipeDirection, name: string, index: number) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+
+    direction === 'left' && console.log(`DISLIKED: ${name}`);
+    direction === 'right' && console.log(`LIKED: ${name}`);
   };
 
   const outOfFrame = (name: string, idx: number) => {
-    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     // handle the case in which go back is pressed before card goes outOfFrame
     currentIndexRef.current >= idx && childRefs[idx].current?.restoreCard();
     // TODO: when quickly swiping and restoring the same card,
@@ -77,13 +56,13 @@ export const Swiper = () => {
     if (
       canSwipe &&
       childRefs[currentIndex]?.current &&
-      currentIndex < db.length
+      currentIndex < imageResults.length
     ) {
       await childRefs[currentIndex].current?.swipe(dir); // Swipe the card!
     }
   };
 
-  const canGoBack = currentIndex < db.length - 1;
+  const canGoBack = currentIndex < imageResults.length - 1;
   const canSwipe = currentIndex >= 0;
 
   // increase current index and show card
@@ -97,21 +76,21 @@ export const Swiper = () => {
   return (
     <>
       <div className="h-96 w-96">
-        {db.map((character, index) => (
+        {imageResults.map((result, index) => (
           <TinderCard
             preventSwipe={['up', 'down']}
             ref={childRefs[index]}
             className="absolute w-96 cursor-grab active:cursor-grabbing"
-            key={character.name}
-            onSwipe={(dir) => swiped(dir, character.name, index)}
-            onCardLeftScreen={() => outOfFrame(character.name, index)}
+            key={`${result.related_content_id}_${index}`}
+            onSwipe={(dir) => swiped(dir, result.title, index)}
+            onCardLeftScreen={() => outOfFrame(result.title, index)}
           >
             <Card
-              bgImageUrl={character.url}
+              bgImageUrl={result.original}
               className="relative h-96 w-full overflow-hidden"
             >
               <div className="absolute bottom-0 left-0 right-0 ml-auto mr-auto rounded-b-lg bg-white bg-opacity-90 p-4">
-                <h3>{character.name}</h3>
+                <h3>{result.title}</h3>
               </div>
             </Card>
           </TinderCard>

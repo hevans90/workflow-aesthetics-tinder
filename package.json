@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "vercel:dev": "vercel dev",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -12,11 +13,15 @@
   "dependencies": {
     "@fontsource-variable/crimson-pro": "^5.0.19",
     "@fontsource-variable/inter": "^5.0.18",
+    "@nanostores/persistent": "^0.10.1",
+    "@nanostores/react": "^0.7.2",
     "@react-spring/web": "^9.7.3",
     "lodash": "^4.17.21",
+    "nanostores": "^0.10.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-tinder-card": "^1.6.4",
+    "serpapi": "^2.1.0",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
@@ -26,6 +31,7 @@
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@vercel/node": "^3.1.7",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
@@ -35,7 +41,9 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.2.2",
+    "vercel": "^34.2.7",
     "vite": "^5.2.0",
-    "vite-plugin-svgr": "^4.2.0"
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-plugin-vercel": "^7.0.0"
   }
 }
