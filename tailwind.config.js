@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        pampas: {
+        primary: {
           50: '#f6f4f0',
           100: '#efece5',
           200: '#dfd7c9',
@@ -20,7 +20,7 @@ export default {
           900: '#54443a',
           950: '#2d231d',
         },
-        gray: {
+        secondary: {
           50: '#f7f7f6',
           100: '#e4e4e3',
           200: '#c9c9c6',
