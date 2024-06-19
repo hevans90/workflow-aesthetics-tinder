@@ -54,7 +54,7 @@ function Advanced() {
     currentIndexRef.current = val;
   };
 
-  const canGoBack = currentIndex !== 0 && currentIndex < db.length - 1;
+  const canGoBack = currentIndex < db.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
