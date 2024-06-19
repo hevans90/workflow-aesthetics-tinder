@@ -54,10 +54,6 @@ export const Swiper = () => {
     currentIndexRef.current = val;
   };
 
-  const canGoBack = currentIndex < db.length - 1;
-
-  const canSwipe = currentIndex >= 0;
-
   // set last direction and decrease current index
   const swiped = (
     direction: SwipeDirection,
@@ -72,9 +68,9 @@ export const Swiper = () => {
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     // handle the case in which go back is pressed before card goes outOfFrame
     currentIndexRef.current >= idx && childRefs[idx].current?.restoreCard();
-    // TODO: when quickly swipe and restore multiple times the same card,
-    // it happens multiple outOfFrame events are queued and the card disappear
-    // during latest swipes. Only the last outOfFrame event should be considered valid
+    // TODO: when quickly swiping and restoring the same card,
+    // multiple outOfFrame events are queued and the card disappears.
+    // Only the last outOfFrame event should be considered valid.
   };
 
   const swipe = async (dir: SwipeDirection) => {
@@ -86,6 +82,9 @@ export const Swiper = () => {
       await childRefs[currentIndex].current?.swipe(dir); // Swipe the card!
     }
   };
+
+  const canGoBack = currentIndex < db.length - 1;
+  const canSwipe = currentIndex >= 0;
 
   // increase current index and show card
   const goBack = async () => {
@@ -142,11 +141,7 @@ export const Swiper = () => {
           YES
         </Button>
       </div>
-      {lastDirection ? (
-        <h2 key={lastDirection} className="infoText">
-          You swiped {lastDirection}
-        </h2>
-      ) : null}
+      {lastDirection ? <>{/* Add some functionality using this?  */}</> : null}
     </>
   );
 };
