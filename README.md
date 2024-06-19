@@ -1,5 +1,7 @@
 # Workflow Aesthetics Tinder
 
+Prod URL: https://workflow-aesthetics-tinder.vercel.app/
+
 Local dev:
 
 - `pnpm install`
