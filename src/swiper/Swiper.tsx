@@ -46,7 +46,9 @@ export const Swiper = () => {
 
   const outOfFrame = (name: string, idx: number) => {
     // handle the case in which go back is pressed before card goes outOfFrame
-    currentIndexRef.current >= idx && childRefs[idx].current?.restoreCard();
+    name &&
+      currentIndexRef.current >= idx &&
+      childRefs[idx].current?.restoreCard();
     // TODO: when quickly swiping and restoring the same card,
     // multiple outOfFrame events are queued and the card disappears.
     // Only the last outOfFrame event should be considered valid.
