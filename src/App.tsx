@@ -31,11 +31,8 @@ function App() {
       );
       const body = (await response.json()) as SerpAPIImageResponse;
       currentImageMetadata.set(body.images_results);
-
-      // do something with this to feed a reccomendation engine?
-      console.log(body.suggested_searches.map(({ name }) => name));
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     setSearching(false);
   };
