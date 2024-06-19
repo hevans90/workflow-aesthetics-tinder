@@ -34,7 +34,7 @@ const db = [
   },
 ];
 
-function Advanced() {
+export const Swiper = () => {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const [lastDirection, setLastDirection] = useState<SwipeDirection>();
   // used for outOfFrame closure
@@ -118,26 +118,26 @@ function Advanced() {
           </TinderCard>
         ))}
       </div>
-      <div className="flex gap-2">
+      <div className="flex w-full justify-between gap-2">
         <Button
           onClick={() => swipe('left')}
           disabled={!canSwipe}
           category="secondary"
-          className="min-w-32 font-crimson text-xl"
+          className="min-w-28 font-crimson text-xl"
         >
           NO
         </Button>
         <Button
           onClick={() => goBack()}
           disabled={!canGoBack}
-          className="min-w-32 font-crimson text-xl"
+          className="min-w-28 font-crimson text-xl"
         >
           UNDO
         </Button>
         <Button
           onClick={() => swipe('right')}
           disabled={!canSwipe}
-          className="min-w-32 font-crimson text-xl"
+          className="min-w-28 font-crimson text-xl"
         >
           YES
         </Button>
@@ -146,13 +146,7 @@ function Advanced() {
         <h2 key={lastDirection} className="infoText">
           You swiped {lastDirection}
         </h2>
-      ) : (
-        <h2 className="infoText">
-          Swipe a card or press a button to get Restore Card button visible!
-        </h2>
-      )}
+      ) : null}
     </>
   );
-}
-
-export default Advanced;
+};
